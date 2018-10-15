@@ -12,7 +12,7 @@ class Blog(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
-    body = db.Column(db.String(600))
+    body = db.Column(db.String(1000))
 
 
     def __init__(self, title, body):
@@ -22,11 +22,21 @@ class Blog(db.Model):
 
 @app.route("/", methods=['POST', 'GET'])
 def index():
-    return redirect('/blog')
+    return redirect('blog.html')
 
 @app.route("/blog")
-def blog():   
-    return render_template('blog.html') #Maybe include blogs=blogs if relevant error occurs
+def blog():
+    blogs = Blog.query.all()
+    return render_template('blog.html')
+
+@app.route("/blog-entry")
+def blog_entry():
+    entry = Blog.query.get(id)
+    id = int(request.args.get('id'))
+    return render_template('blog-entry.html', blog=entry )
+    
+
+
 
 @app.route("/newpost", methods=['GET', 'POST'])
 def newpost():
@@ -51,8 +61,11 @@ def newpost():
             db.session.commit()
 
         blogs = Blog.query.all()
-        return render_template("blog.html",title = "Blogs in Space", blogs = blogs) #Maybe include blogs=blogs if relevant error occurs
+        return render_template("blog-entry.html",title = "Blogs in Space", blog = blogs) 
     return render_template('newpost.html')
+
+
+
 
 if __name__ == ('__main__'):
     app.run()

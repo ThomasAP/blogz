@@ -4,22 +4,19 @@
 {% block content %}
 
 
-    <h1 class="title">Build a Blog</h1>
+    <h1 class="title">Blog Entry/h1>
 
 
     <!--This bit displays the blog table-->
     {% if blogs|length == 0 %}
         <p>No entries yet</p>
     {% else %}
-
-        <ul>
-            {% for blog in blogs %}
+        <ul>           
             <li> <!--anchor tag added to link to each individual blog entry-->
                 <h3><a href="./blog?id={{blog.id}}">{{blog.title}}</a></h3>
                 <p>{{blog.body}}</p>
             </li>
             <hr>
-            {% endfor %}
         </ul>
     
     {% endif %}
