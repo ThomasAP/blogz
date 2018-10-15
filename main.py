@@ -25,21 +25,33 @@ def index():
     return redirect('/blog')
 
 @app.route("/blog")
-def blog():
-    
+def blog():   
     return render_template('blog.html') #Maybe include blogs=blogs if relevant error occurs
 
 @app.route("/newpost", methods=['GET', 'POST'])
 def newpost():
-    if request.method == "POST": 
+    title_error = ''
+    body_error = ''
+
+    if request.method == "POST":
         blog_title = request.form['blog-title']
         blog_body = request.form['blog-body']
-        new_post = Blog(blog_title, blog_body)
-        db.session.add(new_post)
-        db.session.commit()
+
+        if blog_title == '': #Return and error message if title is blank 
+            title_error = "Please fill in the title"
+        if blog_body == '': #Return an error message if body is blank
+            body_error = "Please fill in the body"
+
+        #If either entry field returned an error, rerender form with errors populated
+        if (title_error + body_error) != '':
+            return render_template("newpost.html", title_error = title_error, body_error = body_error)
+        else:
+            new_post = Blog(blog_title, blog_body)
+            db.session.add(new_post)
+            db.session.commit()
 
         blogs = Blog.query.all()
-        return render_template("blog.html",title="Blogs in Space", blogs=blogs) #Maybe include blogs=blogs if relevant error occurs
+        return render_template("blog.html",title = "Blogs in Space", blogs = blogs) #Maybe include blogs=blogs if relevant error occurs
     return render_template('newpost.html')
 
 if __name__ == ('__main__'):

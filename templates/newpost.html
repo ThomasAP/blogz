@@ -5,12 +5,25 @@
 
 <h1>Add a new post</h1>
     <form action="/newpost" method='post'>
-        <label>
-            New Blog:
+        <h3>New Blog Entry</h3>
+        <br>
+        <label class="entry_title">
+            Entry Title:
             <br>
-            <input type="text" name="blog-title" value="Title"/>
+            <input type="text" name="blog-title" />
             <br>
-            <textarea name="blog-body">Body</textarea>
+            <span class="error">{{title_error}}</span>
+        </label>
+        <br>
+        <br>
+        <br>
+
+        <label class="entry_body">
+            Entry Body:
+            <br>
+            <textarea name="blog-body"></textarea>
+            <br>
+            <span class="error">{{body_error}}</span>
         </label>
         <br>
             <input type="submit" value="Post" />
