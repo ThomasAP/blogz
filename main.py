@@ -15,28 +15,30 @@ class Blog(db.Model):
     body = db.Column(db.String(600))
 
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, title):
+        self.title = title
+        self.body = body
 
 
 @app.route("/", methods=['POST', 'GET'])
 def index():
-
-    if request.method == 'POST':
-        blog = request.form['blog']
-        blogs.append(blog)
-        
-    
-    blogs = Blog.query.all()
-
-    return render_template('newpost.html', title="Blogs In Space", blogs=blogs)
+    return redirect('/blog')
 
 @app.route("/blog")
 def blog():
-    return render_template('blog')
+    
+    return render_template('blog.html') #Maybe include blogs=blogs if relevant error occurs
 
+@app.route("/newpost", methods=['GET', 'POST'])
+def newpost():
+    if request.method == "POST": 
+        blog_body = request.form['blog-title', 'blog-body']
+        new_post = Blog(blog_body)
+        db.session.add(new_post)
+        db.session.commit()
 
-
+    blogs = Blog.query.all()
+    return render_template("blog.html",blogs=blogs) #Maybe include blogs=blogs if relevant error occurs
 
 
 if __name__ == ('__main__'):

@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 
 {% block content}
-#This is the blog submission form
+<!--This is the blog submission form-->
 
 <h1>Add a new post</h1>
-    <form action="/" method='post'>
+    <form action="/newpost" method='post'>
         <label>
             New Blog:
-            <input type="text" name="blog" />
+            <input type="text" name="blog-title" />
+            <input type="textarea" name="blog-body" />
         </label>
             <input type="submit" value="Post" />
     </form>
