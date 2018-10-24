@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    <h1 class='title'>User-SignUp</h1>
+    <form action="/signup" method="post">
+        <div class="form-group">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <label for='username'>Username</label>
+                        </td>
+                        <td> 
+                            <input type='text' name='username' value={{u_name}} >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan='4'>
+                            <span class = "error">{{user_name_error}} </span>
+                        </td>
+                    </tr>                                                                
+                    <tr>
+                        <td>
+                            <label for='password'>Password</label>
+                        </td>
+                        <td>
+                            <input type='password' name='password' value={{p_word}} >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan='4'>
+                            <span class = "error">{{password_error}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for='verify'>Verify Password</label>
+                        </td>
+                        <td>
+                            <input type='password' name='verify' value={{v_p_word}} >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan='4'>
+                            <span class = "error">{{verify_error}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for='email'>Email (Optional)</label>
+                        </td>
+                        <td>
+                            <input type='text' name='email' value={{e_mail}} >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan='4'>
+                            <span class ="error">{{email_error}}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <input class="btn btn-primary" type='submit' value='Submit'>
+
+    </form>
+
+{% endblock %}
