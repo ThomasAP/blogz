@@ -3,21 +3,22 @@
 
 {% block content %}
 
+    <div class="title">
+        <h1>Blog Entry</h1>
+    </div>
+        
 
-    <h1 class="title">Blog Entry</h1>
-    
+    <div>
+        <!--This bit displays the blog table-->
 
+            <ul>
+                <li> <!--anchor tag added to link to each individual blog entry-->
+                    <h3><a href="./blog?id={{blog.id}}">{{blog.title}}</a></h3> by <a href="blog?user={{blog.author.username}}">{{blog.author.username}}</a>
+                    <p>{{blog.body}}</p>
+                </li>
 
-    <!--This bit displays the blog table-->
+            </ul>
 
-        <ul>
-            <li> <!--anchor tag added to link to each individual blog entry-->
-                <h3><a href="./blog?id={{blog.id}}">{{blog.title}} by {{blog_author}}</a></h3>
-                <p>{{blog.body}}</p>
-            </li>
-
-        </ul>
-
-
+    </div>
 
 {% endblock %}

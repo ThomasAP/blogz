@@ -1,7 +1,19 @@
-.menu li{
-    align-content: left;
+
+
+nav ul {
+    padding: 0;
     display: inline;
-   
+}
+
+nav ul li {
+    list-style: none;
+    display: inline;
+    margin-right: 15px;
+}
+
+nav #log-menu {
+    float: right;
+    margin-top: 0px;
 }
 
 .title {

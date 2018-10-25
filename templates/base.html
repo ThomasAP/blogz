@@ -7,12 +7,21 @@
     </head>
 
     <body>
-        <nav class="menu">
-            <ul>
-                <li><a href="/blog">Main Blog Page</a></li>
-                <li><a href="/newpost">Add a Blog Entry</a></li>
+        <nav>
+            <ul id="log-menu">
+                <li class="log-menu"><a href="/login">Login</a></li>
+                <li class="log-menu"><a href="/logout">Logout</a></li>
             </ul>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/blog">All Posts</a></li>
+                <li><a href="/newpost">New Post</a></li>
+            </ul>
+            
         </nav>
+        <br>
+        <br>
+        <br>
 
         {% block content %}
         {% endblock %}

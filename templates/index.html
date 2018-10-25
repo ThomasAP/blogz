@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="title">
+        <h1>Blog Users</h1>
+    </div>
+    
+    
+    <div>
+        {% if users|length == 0 %}
+            <p>No entries yet</p>
+        {% else %}
+
+            <hr>
+
+            <ul>
+                {% for user in users %} <!-- user is a variable created here to loop through users(the variable containing the 'Users' table-->
+                <li>
+                    <a href="/singleUser?user={{user.username}}">{{user.username}}</a>  <!--make a link out of user's username(column) taken from User table ad link it to all the all that user's blog posts(blog.html)-->
+                </li>
+            
+                {% endfor %}
+            </ul>
+
+        {% endif %}
+    </div>
+
+{% endblock %}
