@@ -49,8 +49,11 @@ def login():
             flash('Logged In')
             return redirect('/')
         else:
-            # TODO - explain why login failed
-            return '<h1>Error!</h1>'
+            if not user:
+                flash("Username Not Found")
+            elif user.password != password
+                flash("Invalid Password")
+
     return render_template('login.html')
 
 @app.route("/", methods=['POST', 'GET'])

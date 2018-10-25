@@ -13,7 +13,7 @@
             {% for blog in users.blogs %}
             <ul>
                 <li> 
-                    <h3><a href="./blog?id={{blog.id}}">{{blog.title}}</a></h3> by <a href="/singleUser?user={{blog.author.username}}">{{blog.author.username}}</a>
+                    <h3><a href="/blog-entry?id={{blog.id}}">{{blog.title}}</a></h3> by <a href="/singleUser?user={{blog.author.username}}">{{blog.author.username}}</a>
                     <p>{{blog.body}}</p>
                 </li>
 
