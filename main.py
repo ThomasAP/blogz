@@ -51,7 +51,7 @@ def login():
         else:
             if not user:
                 flash("Username Not Found")
-            elif user.password != password
+            elif user.password != password:
                 flash("Invalid Password")
 
     return render_template('login.html')
