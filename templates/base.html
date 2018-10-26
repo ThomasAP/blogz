@@ -8,9 +8,15 @@
 
     <body>
         <nav>
+            
             <ul id="log-menu">
-                <li class="log-menu"><a href="/login">Login</a></li>
-                <li class="log-menu"><a href="/logout">Logout</a></li>
+                {% if not session['username'] %}
+                <li><a href="/login">Login</a></li>
+                <li><a href="/signup">Sign Up</a></li>
+                {% endif %}
+                {% if session['username'] %}
+                <li><a href="/logout">Logout</a></li>
+                {% endif %}
             </ul>
             <ul>
                 <li><a href="/">Home</a></li>
@@ -25,7 +31,7 @@
 
         {% with messages = get_flashed_messages() %}
             <ul>
-            {% for messages in messages %}
+            {% for message in messages %}
                 <li>{{message}}</li>
             {% endfor %}
             </ul>

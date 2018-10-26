@@ -33,7 +33,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    allowed_routes = ['login', 'signup']
+    allowed_routes = ['login', 'signup', 'blog', 'index', 'logout']
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
@@ -51,8 +51,13 @@ def login():
         else:
             if not user:
                 flash("Username Not Found")
-            elif user.password != password:
+                return redirect('/login')
+            if user.password != password:
                 flash("Invalid Password")
+                return redirect('/login')
+            if password == '':
+                flash("Password Required")
+                return redirect('/login')
 
     return render_template('login.html')
 
@@ -165,7 +170,8 @@ def signup():
                 return redirect('newpost.html')
             else:
                 # TODO - improve user already exists in database message
-                return "<h1>Duplicate User</h1>"
+                flash('Username Already Exists')
+                return redirect('/signup')
             
 
     return render_template('signup.html', u_name=username, p_word=password, v_p_word=verify, e_mail=email )
@@ -173,7 +179,7 @@ def signup():
 @app.route('/logout')
 def logout():
     del session['username']
-    return redirect('/')
+    return redirect('/blog')
 
 @app.route("/newpost", methods=['GET', 'POST'])
 def newpost():
