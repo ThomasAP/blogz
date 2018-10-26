@@ -10,6 +10,9 @@
         
 
     <div>
+        {% if users.blogs|length == 0 %}
+            <h1>No entries yet</h1>
+        {% else %}
             {% for blog in users.blogs %}
             <ul>
                 <li> 
@@ -19,6 +22,8 @@
 
             </ul>
             {% endfor %}
+
+        {% endif %}
     </div>
 
 {% endblock %}

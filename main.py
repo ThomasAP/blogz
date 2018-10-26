@@ -33,7 +33,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    allowed_routes = ['login', 'signup', 'blog', 'index', 'logout']
+    allowed_routes = ['login', 'signup', 'blog', 'index', 'logout', 'singleUser']
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
@@ -71,40 +71,31 @@ def blog():
     blogs = Blog.query.all()
     return render_template('blog.html', blogs=blogs)
 
-@app.route("/singleUser")
+@app.route("/singleUser", methods=['POST', 'GET'])
 def singleUser():
-    user = request.args.get('user')
-    uname = User.query.filter_by(username=user).first()
+    if request.method == 'GET':
+        user = request.args.get('user')
+        uname = User.query.filter_by(username=user).first()
 
-    return render_template('singleUser.html', users=uname)
-
-@app.route("/blog-entry")
-def blog_entry():
-    id = int(request.args.get('id'))
-    entry = Blog.query.get(id)
-
-    return render_template('blog-entry.html', blog=entry )
-
-@app.route("/signup", methods=['POST', 'GET'])
-def signup():
-    alphanum="aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYz1234567890"
-    un_error = ''
-    pwd_error = ''
-    ver_error = '' 
-    em_error = ''
-    
-    u_name=''
-    p_word=''
-    v_p_word=''
-    e_mail=''
-    
-    username =''
-    password=''
-    verify=''
-    email=''
-       
-    if request.method == 'POST':
+        return render_template('singleUser.html', users=uname)
+    elif request.method == 'POST':
         
+        alphanum="aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYz1234567890"
+        un_error = ''
+        pwd_error = ''
+        ver_error = '' 
+        em_error = ''
+        
+        u_name=''
+        p_word=''
+        v_p_word=''
+        e_mail=''
+        
+        username =''
+        password=''
+        verify=''
+        email=''
+               
         username = request.form['username']
         # Include validation for username
         #If User field is blank
@@ -126,6 +117,8 @@ def signup():
         if password == '':
             pwd_error="User must enter a password."
 
+        if len(password) < 3 or len(password) > 20:
+            pwd_error="Password must be between 3 and 20 characters."
         # Include validation for verify presence
         verify = request.form['verify']
         if verify == '':
@@ -167,14 +160,24 @@ def signup():
                 db.session.commit()
                 session['username'] = username
                 flash("User Created")
-                return redirect('newpost.html')
+                return render_template('newpost.html')
             else:
                 # TODO - improve user already exists in database message
                 flash('Username Already Exists')
                 return redirect('/signup')
-            
+    
+@app.route("/blog-entry")
+def blog_entry():
+    id = int(request.args.get('id'))
+    entry = Blog.query.get(id)
 
-    return render_template('signup.html', u_name=username, p_word=password, v_p_word=verify, e_mail=email )
+    return render_template('blog-entry.html', blog=entry )
+
+@app.route("/signup", methods=['POST', 'GET'])
+def signup():
+            
+    if request.method == 'GET':
+        return render_template('signup.html')
 
 @app.route('/logout')
 def logout():
